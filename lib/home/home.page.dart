@@ -1,3 +1,4 @@
+import 'package:badminton_trainer/home/menu/history.page.dart';
 import 'package:badminton_trainer/model/draweritem.model.dart';
 import 'package:badminton_trainer/model/menuitem.model.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +100,9 @@ class _HomePageState extends State<HomePage> {
       menuOptions.add(Padding(
         padding: EdgeInsets.only(bottom: 4.0, top: 4.0),
         child: RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              _menuPressedHandler(item.title.toLowerCase());
+            },
             padding: EdgeInsets.all(16.0),
             color: item.backgroundColor,
             shape: RoundedRectangleBorder(
@@ -136,5 +139,18 @@ class _HomePageState extends State<HomePage> {
       ));
     });
     return menuOptions;
+  }
+
+  _menuPressedHandler(String title) {
+    StatefulWidget widget;
+    switch (title) {
+      case 'sejarah bulutangkis':
+        widget = HistoryPage();
+        break;
+    }
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return widget;
+    }));
   }
 }
