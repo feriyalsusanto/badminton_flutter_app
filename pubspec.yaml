@@ -1,0 +1,29 @@
+name: badminton_trainer
+description: Aplikasi Latihan Badminton
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/ic_badminton.png
+    - assets/ic_birdie.png
+    - assets/ic_court.png
+    - assets/ic_mental.png
+    - assets/ic_nutrition.png
+    - assets/ic_referee.png
+    - assets/ic_rules.png
+    - assets/ic_strategy.png
