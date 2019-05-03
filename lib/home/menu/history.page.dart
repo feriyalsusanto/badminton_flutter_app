@@ -1,4 +1,5 @@
-import 'package:badminton_trainer/widget/videoplayer.dart';
+import 'package:badminton_trainer/util/videolink.util.dart';
+import 'package:badminton_trainer/widget/youtubevideoplayer.dart';
 import 'package:flutter/material.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -56,11 +57,8 @@ class _HistoryPageState extends State<HistoryPage> {
               padding: EdgeInsets.symmetric(vertical: 12.0),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return VideoPlayer(
-                    'Video Sejarah Bulutangkis',
-                    url:
-                        'https://drive.google.com/open?id=17CbLfdqJP8viPOs1icVYC53KyXUHmh5W',
-                  );
+                  return YoutubeVideoPlayer(
+                      'Video Sejarah Bulutangkis', VideoLinkUtil.HISTORY_URL);
                 }));
               },
               child: Row(

@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   video_player: ^0.10.0+8
   chewie: ^0.9.7
+  youtube_player: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -30,4 +31,3 @@ flutter:
     - assets/ic_rules.png
     - assets/ic_strategy.png
     - assets/ic_cover_sejarah.jpg
-    - assets/video_sample.mp4
