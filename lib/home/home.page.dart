@@ -1,4 +1,11 @@
 import 'package:badminton_trainer/home/menu/history.page.dart';
+import 'package:badminton_trainer/home/menu/infrastructure.page.dart';
+import 'package:badminton_trainer/home/menu/nutrition.page.dart';
+import 'package:badminton_trainer/home/menu/referee.page.dart';
+import 'package:badminton_trainer/home/menu/rules.page.dart';
+import 'package:badminton_trainer/home/menu/tactic.page.dart';
+import 'package:badminton_trainer/home/menu/technic.page.dart';
+import 'package:badminton_trainer/home/menu/training.page.dart';
 import 'package:badminton_trainer/model/draweritem.model.dart';
 import 'package:badminton_trainer/model/menuitem.model.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     MenuItem('Sejarah Bulutangkis', 'lorem ipsem', 'assets/ic_birdie.png',
         backgroundColor: Colors.orange),
     MenuItem('Sarana dan Prasarana', 'lorem ipsem', 'assets/ic_court.png'),
-    MenuItem('keterlaksanaan Gizi Seimbang', 'lorem ipsem',
+    MenuItem('Keterlaksanaan Gizi Seimbang', 'lorem ipsem',
         'assets/ic_nutrition.png',
         backgroundColor: Colors.green),
     MenuItem('Perwasitan', 'lorem ipsem', 'assets/ic_referee.png',
@@ -146,6 +153,27 @@ class _HomePageState extends State<HomePage> {
     switch (title) {
       case 'sejarah bulutangkis':
         widget = HistoryPage();
+        break;
+      case 'sarana dan prasarana':
+        widget = InfrastructurePage();
+        break;
+      case 'keterlaksanaan gizi seimbang':
+        widget = NutritionPage();
+        break;
+      case 'perwasitan':
+        widget = RefereePage();
+        break;
+      case 'teknik dasar':
+        widget = TechnicPage();
+        break;
+      case 'peraturan bulutangkis':
+        widget = RulesPage();
+        break;
+      case 'taktik dan strategi':
+        widget = TacticPage();
+        break;
+      case 'pelatihan mental':
+        widget = TrainingPage();
         break;
     }
 
