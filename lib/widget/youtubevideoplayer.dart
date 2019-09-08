@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player/youtube_player.dart';
+import 'package:flutter/services.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubeVideoPlayer extends StatefulWidget {
   YoutubeVideoPlayer(this.title, this.url);
 
-  String title;
-  String url;
+  final String title;
+  final String url;
 
   @override
   _YoutubeVideoPlayerState createState() {
@@ -14,40 +15,72 @@ class YoutubeVideoPlayer extends StatefulWidget {
 }
 
 class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
-  VideoPlayerController _videoPlayerController;
+  YoutubePlayerController _controller = YoutubePlayerController();
+
+  void listener() {
+    if (_controller.value.playerState == PlayerState.ENDED) {
+      _showThankYouDialog();
+    }
+  }
+
+  @override
+  void deactivate() {
+    _controller.pause();
+    super.deactivate();
+  }
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: YoutubePlayer(
-        source: widget.url,
         context: context,
-        quality: YoutubeQuality.HD,
-        aspectRatio: 16 / 9,
-        autoPlay: true,
-        loop: false,
-        reactToOrientationChange: true,
-        startFullScreen: false,
-        controlsActiveBackgroundOverlay: true,
-        controlsTimeOut: Duration(seconds: 4),
-        playerMode: YoutubePlayerMode.DEFAULT,
-        callbackController: (controller) {
-          _videoPlayerController = controller;
+        width: width,
+        videoId: widget.url,
+        flags: YoutubePlayerFlags(
+          mute: false,
+          autoPlay: true,
+          forceHideAnnotation: true,
+          showVideoProgressIndicator: true,
+          disableDragSeek: false,
+          hideThumbnail: true,
+          hideFullScreenButton: true,
+        ),
+        videoProgressIndicatorColor: Color(0xFFFF0000),
+        progressColors: ProgressColors(
+          playedColor: Color(0xFFFF0000),
+          handleColor: Color(0xFFFF4433),
+        ),
+        onPlayerInitialized: (controller) {
+          _controller = controller;
+          _controller.addListener(listener);
         },
-        onError: (error) {
-          print(error);
-        },
-        onVideoEnded: () {},
       ),
+    );
+  }
+
+  void _showThankYouDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Video Ended"),
+          content: Text("Thank you for trying the plugin!"),
+        );
+      },
     );
   }
 }

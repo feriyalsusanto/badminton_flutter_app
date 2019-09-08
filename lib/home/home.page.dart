@@ -1,184 +1,79 @@
-import 'package:badminton_trainer/home/menu/history.page.dart';
-import 'package:badminton_trainer/home/menu/infrastructure.page.dart';
-import 'package:badminton_trainer/home/menu/nutrition.page.dart';
-import 'package:badminton_trainer/home/menu/referee.page.dart';
-import 'package:badminton_trainer/home/menu/rules.page.dart';
-import 'package:badminton_trainer/home/menu/tactic.page.dart';
-import 'package:badminton_trainer/home/menu/technic.page.dart';
-import 'package:badminton_trainer/home/menu/training.page.dart';
-import 'package:badminton_trainer/model/draweritem.model.dart';
-import 'package:badminton_trainer/model/menuitem.model.dart';
+import 'package:badminton_trainer/home/info.page.dart';
+import 'package:badminton_trainer/widget/youtubevideoplayer.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart' as Util;
+
+import 'menu/menu_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() {
-    return _HomePageState();
-  }
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
-  final drawerItems = [
-    DrawerItem('Menu Utama', Icons.class_),
-    DrawerItem('Pengaturan', Icons.settings)
+  int _navBarIndex = 0;
+  List<BottomNavigationBarItem> _navBarItems = [
+    BottomNavigationBarItem(
+        icon: Icon(Icons.dashboard), title: Text('Menu Utama')),
+    BottomNavigationBarItem(icon: Icon(Icons.info), title: Text('Info'))
   ];
-  final menuItems = [
-    MenuItem('Sejarah Bulutangkis', 'lorem ipsem', 'assets/ic_birdie.png',
-        backgroundColor: Colors.orange),
-    MenuItem('Sarana dan Prasarana', 'lorem ipsem', 'assets/ic_court.png'),
-    MenuItem('Keterlaksanaan Gizi Seimbang', 'lorem ipsem',
-        'assets/ic_nutrition.png',
-        backgroundColor: Colors.green),
-    MenuItem('Perwasitan', 'lorem ipsem', 'assets/ic_referee.png',
-        backgroundColor: Colors.lime),
-    MenuItem('Teknik Dasar', 'lorem ipsem', 'assets/ic_badminton.png',
-        backgroundColor: Colors.red),
-    MenuItem('Peraturan Bulutangkis', 'lorem ipsem', 'assets/ic_rules.png',
-        backgroundColor: Colors.deepPurple),
-    MenuItem('Taktik dan Strategi', 'lorem ipsem', 'assets/ic_strategy.png',
-        backgroundColor: Colors.teal),
-    MenuItem('Pelatihan Mental', 'lorem ipsem', 'assets/ic_mental.png',
-        backgroundColor: Colors.pink),
+  List<String> _navBarTitles = ['Menu Utama', 'Info Aplikasi'];
+  List _navBarContents = [
+    MenuPage(),
+    InfoPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _key,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'Menu Utama',
-          style: TextStyle(color: Colors.blue),
+        appBar: AppBar(
+          title: Text(_navBarTitles[_navBarIndex]),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.camera_alt), onPressed: () => scan())
+          ],
         ),
-        centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.blue),
-      ),
-      drawer: Theme(
-          data: Theme.of(context).copyWith(canvasColor: Colors.blue),
-          child: Drawer(
-            child: ListView(
-              children: _buildDrawerItems(),
-            ),
-          )),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: _buildMenuItems(),
-        ),
-      ),
-    );
+        body: _navBarContents[_navBarIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _navBarIndex,
+          items: _navBarItems,
+          selectedFontSize: 16.0,
+          selectedIconTheme: IconThemeData(size: 32.0),
+          unselectedIconTheme: IconThemeData(size: 30.0),
+          iconSize: 32.0,
+          onTap: (index) {
+            setState(() {
+              _navBarIndex = index;
+            });
+          },
+        ));
   }
 
-  _buildDrawerItems() {
-    var drawerOptions = <Widget>[];
-    drawerItems.forEach((item) {
-      drawerOptions.add(ListTile(
-        leading: Icon(
-          item.icon,
-          color: Colors.white,
-        ),
-        title: Text(
-          item.title,
-          style: TextStyle(color: Colors.white, fontSize: 16.0),
-        ),
-        onTap: () {
-          _onSelectedDrawers(item.title);
-        },
-      ));
-    });
-    return drawerOptions;
-  }
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      print('barcode $barcode');
+      if (barcode != null) {
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return YoutubeVideoPlayer(
+              'Video', Util.YoutubePlayer.convertUrlToId(barcode));
+        }));
 
-  _onSelectedDrawers(String title) {
-    Navigator.pop(context);
-//    if (!title.toLowerCase().contains('utama')) {
-//
-//    }
-  }
-
-  _buildMenuItems() {
-    var menuOptions = <Widget>[];
-    menuItems.forEach((item) {
-      menuOptions.add(Padding(
-        padding: EdgeInsets.only(bottom: 4.0, top: 4.0),
-        child: RaisedButton(
-            onPressed: () {
-              _menuPressedHandler(item.title.toLowerCase());
-            },
-            padding: EdgeInsets.all(16.0),
-            color: item.backgroundColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12.0))),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      item.title,
-                      style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        item.subtitle,
-                        style: TextStyle(fontSize: 14.0, color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 16.0),
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(item.assetName, height: 64.0, width: 64.0),
-                )
-              ],
-            )),
-      ));
-    });
-    return menuOptions;
-  }
-
-  _menuPressedHandler(String title) {
-    StatefulWidget widget;
-    switch (title) {
-      case 'sejarah bulutangkis':
-        widget = HistoryPage();
-        break;
-      case 'sarana dan prasarana':
-        widget = InfrastructurePage();
-        break;
-      case 'keterlaksanaan gizi seimbang':
-        widget = NutritionPage();
-        break;
-      case 'perwasitan':
-        widget = RefereePage();
-        break;
-      case 'teknik dasar':
-        widget = TechnicPage();
-        break;
-      case 'peraturan bulutangkis':
-        widget = RulesPage();
-        break;
-      case 'taktik dan strategi':
-        widget = TacticPage();
-        break;
-      case 'pelatihan mental':
-        widget = TrainingPage();
-        break;
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+      }
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        print('The user did not grant the camera permission!');
+      } else {
+        print('Unknown error: $e');
+      }
+    } on FormatException {
+      print(
+          'null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      print('Unknown error: $e');
     }
-
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return widget;
-    }));
   }
 }

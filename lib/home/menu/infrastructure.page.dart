@@ -1,4 +1,8 @@
-import 'package:badminton_trainer/widget/videoplayer.dart';
+import 'package:badminton_trainer/home/menu/infrastructure/infrastructure_clothe.page.dart';
+import 'package:badminton_trainer/home/menu/infrastructure/infrastructure_field.page.dart';
+import 'package:badminton_trainer/home/menu/infrastructure/infrastructure_net.page.dart';
+import 'package:badminton_trainer/home/menu/infrastructure/infrastructure_racket.page.dart';
+import 'package:badminton_trainer/home/menu/infrastructure/infrastructure_shuttlecock.page.dart';
 import 'package:flutter/material.dart';
 
 class InfrastructurePage extends StatefulWidget {
@@ -9,6 +13,14 @@ class InfrastructurePage extends StatefulWidget {
 }
 
 class _InfrastructurePageState extends State<InfrastructurePage> {
+  List<InfrastructureModel> infrastructures = [
+    InfrastructureModel(title: 'Lapangan', widget: FieldPage()),
+    InfrastructureModel(title: 'Net', widget: NetPage()),
+    InfrastructureModel(title: 'Shuttlecock', widget: ShuttlecockPage()),
+    InfrastructureModel(title: 'Raket', widget: RacketPage()),
+    InfrastructureModel(title: 'Sepatu dan Pakaian', widget: ClothePage())
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,74 +28,34 @@ class _InfrastructurePageState extends State<InfrastructurePage> {
         appBar: AppBar(
           title: Text('Sarana dan Prasarana'),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/ic_cover_sejarah.jpg',
-                    height: 200.0,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 4.0),
-                    child: Text(
-                      'Sejarah Bulu Tangkis Lengkap – Bulu tangkis atau yang sering disebut juga dengan sebutan badminton ini '
-                          'merupakan suatu permainan olahraga yang cara bermainnya dengan menggunakan alat yang disebut dengan raket dan '
-                          'cara memainkannya dimainkan oleh dua orang (untuk permainan tunggal) dan empat orang (untuk permainan ganda) yang '
-                          'mana saling berlawanan.',
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 16.0),
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-                          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute '
-                          'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat '
-                          'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                      textAlign: TextAlign.justify,
-                    ),
-                  )
-                ],
-              ),
-            )),
-            RaisedButton(
-              padding: EdgeInsets.symmetric(vertical: 12.0),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return VideoPlayer(
-                    'Video Sejarah Bulutangkis',
-                    url:
-                        'https://drive.google.com/open?id=17CbLfdqJP8viPOs1icVYC53KyXUHmh5W',
-                  );
-                }));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.ondemand_video,
-                    color: Colors.white,
-                    size: 24.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      'LIHAT VIDEO',
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
-                  )
-                ],
-              ),
-              color: Colors.blue,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            )
-          ],
-        ));
+        body: ListView.separated(
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  infrastructures[index].title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return infrastructures[index].widget;
+                  }));
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Divider(
+                height: 1.0,
+                color: Colors.grey,
+              );
+            },
+            itemCount: infrastructures.length));
   }
+}
+
+class InfrastructureModel {
+  String title;
+  Widget widget;
+
+  InfrastructureModel({this.title, this.widget});
 }

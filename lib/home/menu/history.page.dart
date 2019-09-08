@@ -1,6 +1,7 @@
-import 'package:badminton_trainer/util/videolink.util.dart';
-import 'package:badminton_trainer/widget/youtubevideoplayer.dart';
+import 'package:badminton_trainer/home/menu/history/world.history.page.dart';
 import 'package:flutter/material.dart';
+
+import 'history/profile.history.page.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -10,78 +11,37 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  int _navBarIndex = 0;
+
+  List<BottomNavigationBarItem> _navBarItems = [
+    BottomNavigationBarItem(icon: Icon(Icons.history), title: Text('Sejarah')),
+    BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('Profil Pemain'))
+  ];
+
+  List _navBarContents = [
+    WorldHistoryPage(),
+    ProfileHistoryPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text('Sejarah Bulutangkis'),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/ic_cover_sejarah.jpg',
-                    height: 200.0,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 4.0),
-                    child: Text(
-                      'Sejarah Bulu Tangkis Lengkap – Bulu tangkis atau yang sering disebut juga dengan sebutan badminton ini '
-                          'merupakan suatu permainan olahraga yang cara bermainnya dengan menggunakan alat yang disebut dengan raket dan '
-                          'cara memainkannya dimainkan oleh dua orang (untuk permainan tunggal) dan empat orang (untuk permainan ganda) yang '
-                          'mana saling berlawanan.',
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 16.0),
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-                          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute '
-                          'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat '
-                          'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                      textAlign: TextAlign.justify,
-                    ),
-                  )
-                ],
-              ),
-            )),
-            RaisedButton(
-              padding: EdgeInsets.symmetric(vertical: 12.0),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return YoutubeVideoPlayer(
-                      'Video Sejarah Bulutangkis', VideoLinkUtil.HISTORY_URL);
-                }));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.ondemand_video,
-                    color: Colors.white,
-                    size: 24.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      'LIHAT VIDEO',
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
-                  )
-                ],
-              ),
-              color: Colors.blue,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            )
-          ],
-        ));
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _navBarIndex,
+          items: _navBarItems,
+          selectedFontSize: 16.0,
+          selectedIconTheme: IconThemeData(size: 32.0),
+          unselectedIconTheme: IconThemeData(size: 30.0),
+          iconSize: 32.0,
+          onTap: (index) {
+            setState(() {
+              _navBarIndex = index;
+            });
+          },
+        ),
+        body: _navBarContents[_navBarIndex]);
   }
 }

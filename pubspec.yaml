@@ -10,9 +10,13 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
-  video_player: ^0.10.0+8
-  chewie: ^0.9.7
-  youtube_player: ^3.4.1
+#  video_player: ^0.10.0+8
+#  chewie: ^0.9.7
+  youtube_player: ^3.5.0
+  youtube_player_flutter: ^4.1.0
+  flutter_html: ^0.10.4
+  flutter_plugin_pdf_viewer: ^1.0.7
+  barcode_scan: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +26,12 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/document/blendedlearning.pdf
+    - assets/document/latihanmental.pdf
+    - assets/document/peraturan.pdf
+    - assets/document/perwasitan.pdf
+    - assets/document/strategi.pdf
+    - assets/document/tatalaksana.pdf
     - assets/ic_badminton.png
     - assets/ic_birdie.png
     - assets/ic_court.png
@@ -31,3 +41,52 @@ flutter:
     - assets/ic_rules.png
     - assets/ic_strategy.png
     - assets/ic_cover_sejarah.jpg
+    - assets/ic_blended.png
+    - assets/ic_fitness.png
+    - assets/ic_bionekanika.png
+    - assets/profile/profile_alan_budi_kusuma.png
+    - assets/profile/profile_christian_hadinata.png
+    - assets/profile/profile_liem_swie_king.png
+    - assets/profile/profile_rudy_hartono.png
+    - assets/profile/profile_susi_susanti.png
+    - assets/profile/profile_tan_joe_hok.png
+    - assets/profile/profile_taufik_hidayat.png
+    - assets/infrastructure/infrastructure_field_badminton.png
+    - assets/infrastructure/infrastructure_field_bwf.png
+    - assets/infrastructure/infrastructure_field_carpet.png
+    - assets/infrastructure/infrastructure_field_carpet2.png
+    - assets/infrastructure/infrastructure_field_international.png
+    - assets/infrastructure/infrastructure_net_intro.png
+    - assets/infrastructure/infrastructure_shuttlecock.png
+    - assets/infrastructure/spec_racket_a.png
+    - assets/infrastructure/spec_racket_b.png
+    - assets/infrastructure/string_racket_a.png
+    - assets/infrastructure/string_racket_b.png
+    - assets/infrastructure/string_racket_c.png
+    - assets/infrastructure/string_racket_spec.png
+    - assets/infrastructure/towel_racket_a.png
+    - assets/infrastructure/towel_racket_b.png
+    - assets/infrastructure/towel_bag_a.png
+    - assets/infrastructure/towel_bag_b.png
+    - assets/infrastructure/clothe_a.png
+    - assets/infrastructure/clothe_b.png
+    - assets/infrastructure/feet_a.png
+    - assets/infrastructure/hand_a.png
+    - assets/infrastructure/headband_a.png
+    - assets/infrastructure/headband_b.png
+    - assets/infrastructure/pant_a.png
+    - assets/infrastructure/pant_b.png
+    - assets/infrastructure/pant_c.png
+    - assets/infrastructure/pant_d.png
+    - assets/infrastructure/shoe_a.png
+    - assets/infrastructure/shoe_b.png
+    - assets/infrastructure/sock_a.png
+    - assets/infrastructure/sock_b.png
+    - assets/technic/service_instruction.png
+    - assets/technic/netting_instruction.png
+    - assets/technic/overheadlob_instruction.png
+    - assets/technic/drive_instruction.png
+    - assets/technic/dropshot_instruction.png
+    - assets/technic/smash_instruction.png
+    - assets/technic/backhand_smash_instruction.png
+    - assets/profile.png

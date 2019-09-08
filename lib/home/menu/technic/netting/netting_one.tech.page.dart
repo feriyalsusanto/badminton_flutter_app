@@ -1,20 +1,20 @@
-import 'package:badminton_trainer/widget/videoplayer.dart';
+import 'package:badminton_trainer/util/videolink.util.dart';
+import 'package:badminton_trainer/widget/youtubevideoplayer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class TrainingPage extends StatefulWidget {
+class NettingOnePage extends StatefulWidget {
   @override
-  _TrainingPageState createState() {
-    return _TrainingPageState();
-  }
+  _NettingOnePageState createState() => _NettingOnePageState();
 }
 
-class _TrainingPageState extends State<TrainingPage> {
+class _NettingOnePageState extends State<NettingOnePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Pelatihan Mental'),
+          title: Text('Netting Latihan Model 1'),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,10 +32,10 @@ class _TrainingPageState extends State<TrainingPage> {
                   Container(
                     padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 4.0),
                     child: Text(
-                      'Sejarah Bulu Tangkis Lengkap – Bulu tangkis atau yang sering disebut juga dengan sebutan badminton ini '
-                          'merupakan suatu permainan olahraga yang cara bermainnya dengan menggunakan alat yang disebut dengan raket dan '
-                          'cara memainkannya dimainkan oleh dua orang (untuk permainan tunggal) dan empat orang (untuk permainan ganda) yang '
-                          'mana saling berlawanan.',
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+                      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute '
+                      'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat '
+                      'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                       textAlign: TextAlign.justify,
                     ),
                   ),
@@ -43,9 +43,9 @@ class _TrainingPageState extends State<TrainingPage> {
                     padding: EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 16.0),
                     child: Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-                          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute '
-                          'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat '
-                          'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute '
+                      'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat '
+                      'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                       textAlign: TextAlign.justify,
                     ),
                   )
@@ -54,14 +54,15 @@ class _TrainingPageState extends State<TrainingPage> {
             )),
             RaisedButton(
               padding: EdgeInsets.symmetric(vertical: 12.0),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return VideoPlayer(
-                    'Video Sejarah Bulutangkis',
-                    url:
-                        'https://drive.google.com/open?id=17CbLfdqJP8viPOs1icVYC53KyXUHmh5W',
-                  );
+              onPressed: () async {
+                await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) {
+                  return YoutubeVideoPlayer(
+                      'Video Netting Latihan Model 1', VideoLinkUtil.NETTING_URL);
                 }));
+
+                SystemChrome.setPreferredOrientations(
+                    [DeviceOrientation.portraitUp]);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

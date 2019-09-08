@@ -12,7 +12,7 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return HomePage();
       }));
@@ -34,17 +34,17 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
               size: 96.0,
               color: Colors.white,
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: Text(
-                'BADMINTON TRAINER',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600),
-                textAlign: TextAlign.center,
-              ),
-            )
+//            Padding(
+//              padding: EdgeInsets.only(top: 16.0),
+//              child: Text(
+//                'BADMINTON TRAINER',
+//                style: TextStyle(
+//                    fontSize: 16.0,
+//                    color: Colors.white,
+//                    fontWeight: FontWeight.w600),
+//                textAlign: TextAlign.center,
+//              ),
+//            )
           ],
         ),
       ),

@@ -1,5 +1,12 @@
-import 'package:badminton_trainer/widget/videoplayer.dart';
+import 'package:badminton_trainer/home/menu/technic/dropshot.tech.page.dart';
+import 'package:badminton_trainer/home/menu/technic/netting.tech.page.dart';
+import 'package:badminton_trainer/home/menu/technic/overheadlob.tech.page.dart';
+import 'package:badminton_trainer/home/menu/technic/service.tech.page.dart';
+import 'package:badminton_trainer/home/menu/technic/smash.tech.page.dart';
 import 'package:flutter/material.dart';
+
+import 'technic/drive.tech.page.dart';
+import 'technic/footwork.tech.page.dart';
 
 class TechnicPage extends StatefulWidget {
   @override
@@ -9,6 +16,16 @@ class TechnicPage extends StatefulWidget {
 }
 
 class _TechnicPageState extends State<TechnicPage> {
+  Map<String, int> menus = {
+    'Service': 1,
+    'Netting': 2,
+    'Overhead Lob': 2,
+    'Drive': 1,
+    'Smash': 2,
+    'Dropshot': 2,
+    'Footwork': 1
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,74 +33,66 @@ class _TechnicPageState extends State<TechnicPage> {
         appBar: AppBar(
           title: Text('Teknik Dasar'),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/ic_cover_sejarah.jpg',
-                    height: 200.0,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 4.0),
-                    child: Text(
-                      'Sejarah Bulu Tangkis Lengkap – Bulu tangkis atau yang sering disebut juga dengan sebutan badminton ini '
-                          'merupakan suatu permainan olahraga yang cara bermainnya dengan menggunakan alat yang disebut dengan raket dan '
-                          'cara memainkannya dimainkan oleh dua orang (untuk permainan tunggal) dan empat orang (untuk permainan ganda) yang '
-                          'mana saling berlawanan.',
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 16.0),
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-                          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute '
-                          'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat '
-                          'non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                      textAlign: TextAlign.justify,
-                    ),
-                  )
-                ],
+        body: ListView.separated(
+          itemBuilder: (context, index) {
+            int count = menus[menus.keys.elementAt(index)];
+            return ListTile(
+              title: Text(menus.keys.elementAt(index)),
+              trailing: Icon(
+                Icons.chevron_right,
+                color: count > 1 ? Colors.grey : Colors.transparent,
               ),
-            )),
-            RaisedButton(
-              padding: EdgeInsets.symmetric(vertical: 12.0),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return VideoPlayer(
-                    'Video Sejarah Bulutangkis',
-                    url:
-                    'https://drive.google.com/open?id=17CbLfdqJP8viPOs1icVYC53KyXUHmh5W',
-                  );
-                }));
+              onTap: () {
+                openPage(menus.keys.elementAt(index).toLowerCase());
+//                if (count > 1) {
+//                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+//                    return TechnicMultiPage(
+//                      title: menus.keys.elementAt(index),
+//                    );
+//                  }));
+//                } else {
+//
+//                }
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.ondemand_video,
-                    color: Colors.white,
-                    size: 24.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      'LIHAT VIDEO',
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
-                  )
-                ],
-              ),
-              color: Colors.blue,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            )
-          ],
+            );
+          },
+          separatorBuilder: (context, index) {
+            return Divider(
+              height: 1.0,
+              color: Colors.grey,
+            );
+          },
+          itemCount: menus.length,
         ));
+  }
+
+  openPage(String key) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      switch (key) {
+        case 'service':
+          return ServiceTechnicPage();
+          break;
+        case 'netting':
+          return NettingTechnicPage();
+          break;
+        case 'overhead lob':
+          return OverheadLobTechnicPage();
+          break;
+        case 'drive':
+          return DriveTechnicPage();
+          break;
+        case 'smash':
+          return SmashTechnicPage();
+          break;
+        case 'dropshot':
+          return DropShotTechnicPage();
+          break;
+        case 'footwork':
+          return FootworkTechnicPage();
+          break;
+        default:
+          return null;
+      }
+    }));
   }
 }
